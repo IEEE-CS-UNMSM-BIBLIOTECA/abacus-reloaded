@@ -1,0 +1,5 @@
+.root {
+  &[data-size='2xl'] {
+    font-size: 70px;
+  }
+}
