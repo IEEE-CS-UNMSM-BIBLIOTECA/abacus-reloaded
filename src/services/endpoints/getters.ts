@@ -1,14 +1,15 @@
 import api from '@/services/config';
+import { DocumentType, OrderType } from '@/types';
 
 export const getOrders = async () => {
   const res = await api.get('/dashboard/orders');
-  const data = res.data || [];
+  const data: OrderType[] = res.data || [];
   return data;
 };
 
 export const getDocuments = async () => {
   const res = await api.get('/dashboard/documents');
-  const data = res.data || [];
+  const data: DocumentType[] = res.data || [];
   return data;
 };
 

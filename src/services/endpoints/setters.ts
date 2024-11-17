@@ -20,3 +20,8 @@ export const addPublisher = (data: SubmitPublisherPayload) => {
   const res = api.post('/dashboard/publisher', data);
   return res;
 };
+
+export const finishOrder = (order_id: number) => {
+  const res = api.post(`/dashboard/order/${order_id}`);
+  return res;
+};

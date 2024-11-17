@@ -80,7 +80,6 @@ const NewAuthor = ({ opened, onClose }: {
               {...form.getInputProps('birth_date')}
               label="Fecha de nacimiento"
               type="date"
-              required
             />
           </Grid.Col>
           <Grid.Col span={6}>

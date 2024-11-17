@@ -109,7 +109,7 @@ export interface ListType extends ListNonKeyFields {
 interface AuthorNonKeyFields {
   name:        string;
   death_date?: string | null;
-  birth_date:  string;
+  birth_date?: string;
   bio:         string;
 }
 
