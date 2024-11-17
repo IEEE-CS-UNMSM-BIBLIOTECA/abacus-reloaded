@@ -2,6 +2,11 @@
   --mantine-spacing-xxs: 0.25rem;
   --mantine-spacing-xxl: 3rem;
   --mantine-spacing-xxxl: 5.3rem;
+
+  --heading-fz-base: 85rem;
+  --heading-fz-factor: 1.5;
+  --heading-ls-base: -0.3rem;
+  --heading-ls-factor: 0.1;
 }
 
 :root[data-mantine-color-scheme='dark'] {
@@ -84,6 +89,8 @@
 
 .jc-space-between { justify-content: space-between; }
 .jc-center { justify-content: center; }
+.jc-start { justify-content: start; }
+.jc-end { justify-content: end; }
 
 .ai-center { align-items: center; }
 .ai-start { align-items: start; }
@@ -138,6 +145,11 @@ p {
 .py-lg {
   padding-top: var(--mantine-spacing-lg);
   padding-bottom: var(--mantine-spacing-lg);
+}
+
+.py-xl {
+  padding-top: var(--mantine-spacing-xl);
+  padding-bottom: var(--mantine-spacing-xl);
 }
 
 .py-xxl {
@@ -203,6 +215,43 @@ input.unstyled {
 input::placeholder {
   opacity: 0.5;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 200;
+  line-height: 0.95;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1 {
+  letter-spacing: calc(-0.1rem / 1);
+}
+
+h2 {
+  letter-spacing: calc(-0.1rem / 2);
+}
+
+h3 {
+  letter-spacing: calc(-0.1rem / 3);
+}
+
+h4 {
+  letter-spacing: calc(-0.1rem / 4);
+}
+
+h5 {
+  letter-spacing: calc(-0.1rem / 5);
+}
+
+h6 {
+  letter-spacing: calc(-0.1rem / 6);
+}
+
 
 /* images */
 

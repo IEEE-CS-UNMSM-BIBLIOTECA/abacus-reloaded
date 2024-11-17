@@ -23,6 +23,7 @@ const Nav = () => {
     {
       navItems.map((navItem) => (
         <ActionIcon
+          key={navItem.label}
           color="black"
           variant="transparent"
           component={Link}

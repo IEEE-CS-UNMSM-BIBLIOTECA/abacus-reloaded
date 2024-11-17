@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
 import { AxiosError } from 'axios';
 import { SigninPayload } from '@/types';
-import { signIn } from '@/services/endpoints';
+import { signIn } from '@/services/endpoints/auth';
 
 const Signin = () => {
   const form = useForm({

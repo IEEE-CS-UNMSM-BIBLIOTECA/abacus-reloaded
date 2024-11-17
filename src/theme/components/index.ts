@@ -2,7 +2,7 @@ import { MantineThemeComponents } from '@mantine/core';
 import Button from './Button';
 import Card from './Card';
 import Text from './Text';
-import Select from './Select';
+// import Select from './Select';
 import TextInput from './TextInput';
 import Rating from './Rating';
 import Checkbox from './Checkbox';
@@ -14,10 +14,17 @@ const components: MantineThemeComponents = {
   Button,
   Card,
   Text,
-  Select,
+  Select: TextInput,
   TextInput,
   Input: TextInput,
   TagsInput: TextInput,
+  NumberInput: {
+    ...TextInput,
+    defaultProps: {
+      ...TextInput.defaultProps,
+      hideControls: true,
+    },
+  },
   Textarea,
   Rating,
   Checkbox,
