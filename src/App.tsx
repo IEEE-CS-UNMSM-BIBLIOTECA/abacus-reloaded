@@ -9,6 +9,7 @@ import Dash from './pages/Dash';
 const App = () => {
   useAppStart();
   useLocationChange();
+
   const [token] = useLocalStorage({ key: 'token' });
 
   return (

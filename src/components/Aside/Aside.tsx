@@ -1,6 +1,6 @@
 import { Route, Switch } from 'wouter';
 import NewOrder from '@/pages/Dash/Orders/NewOrder';
-import NewDocument from '@/pages/Dash/Documents/NewDocument';
+import NewDocument from '@/components/NewDocument';
 
 const Aside = () => {
   return (

@@ -25,6 +25,12 @@ const components: MantineThemeComponents = {
       hideControls: true,
     },
   },
+  ActionIcon: {
+    defaultProps: {
+      radius: 0,
+      color: 'black',
+    },
+  },
   Textarea,
   Rating,
   Checkbox,

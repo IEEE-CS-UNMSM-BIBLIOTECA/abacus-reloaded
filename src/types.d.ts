@@ -25,7 +25,16 @@ export interface DocumentType extends DocumentNonKeyFields {
   tags:      TagBaseType[];
 }
 
-export interface SubmitDocumentPayload extends Omit<DocumentNonKeyFields, "mean_rating"> {
+export interface SubmitDocumentFormData extends Omit<DocumentNonKeyFields, "mean_rating"> {
+  authors_id:   string[];
+  language_id:  string;
+  format_id:    string;
+  publisher_id: string;
+  tags_id:      string[];
+}
+
+export interface SubmitDocumentPayload extends Omit<DocumentNonKeyFields, "mean_rating" | "isbn"> {
+  ISBN:         string;    // todo: change to isbn
   authors_id:   number[];
   language_id:  number;
   format_id:    number;
@@ -98,9 +107,10 @@ export interface ListType extends ListNonKeyFields {
 /* author */
 
 interface AuthorNonKeyFields {
-  bio:        string;
-  birth_date: string;
-  death_date: string | null;
+  name:        string;
+  death_date?: string | null;
+  birth_date:  string;
+  bio:         string;
 }
 
 export interface AuthorType extends AuthorBaseType {
@@ -146,7 +156,7 @@ export interface TagType extends TagNonKeyFields {
   id: number;
 }
 
-export interface SubmitTagPayload extends TagNonKeyFields {}
+export interface SubmitTagPayload extends Omit<TagNonKeyFields, "mean_rating"> {}
 
 export interface TagBaseType extends BaseEntity {}
 
@@ -169,13 +179,23 @@ export interface SigninPayload {
   password: string;
 }
 
+/* publisher */
+
+export interface PublisherNonKeyFields {
+  name: string;
+}
+
+export interface PublisherType extends PublisherNonKeyFields {
+  id: number;
+}
+
+export interface SubmitPublisherPayload extends PublisherNonKeyFields {}
+
 /* other */
 
 export interface RoleType extends BaseEntity {}
 
 export interface DocumentFormatType extends BaseEntity {}
-
-export interface PublisherType extends BaseEntity {}
 
 export interface GenderType extends BaseEntity {}
 
@@ -190,7 +210,12 @@ interface BaseEntity {
   name: string;
 }
 
-export interface OptionType {
+export interface SearchableSelectOptionType {
+  value: string;
+  label: string;
+}
+
+export interface MenuOptionType {
   label:   string;
   onClick: () => void;
 }

@@ -3,10 +3,13 @@ import { useForm } from '@mantine/form';
 import { useMutation } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
 import { AxiosError } from 'axios';
+import { useLocalStorage } from '@mantine/hooks';
 import { SigninPayload } from '@/types';
 import { signIn } from '@/services/endpoints/auth';
 
 const Signin = () => {
+  const [token] = useLocalStorage({ key: 'token' });
+
   const form = useForm({
     initialValues: {
       username: '',
@@ -31,6 +34,10 @@ const Signin = () => {
     localStorage.setItem('token', data.token);
     setLocation('/dash/orders');
   });
+
+  if (token) {
+    setLocation('/dash/orders');
+  }
 
   return (
     <form

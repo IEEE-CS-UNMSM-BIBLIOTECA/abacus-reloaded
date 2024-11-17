@@ -49,7 +49,7 @@ export const getCountries = async () => {
 };
 
 export const getTags = async () => {
-  const res = await api.get('/dashboard/tags');
+  const res = await api.get('/dashboard/alltags');
   const data = res.data || [];
   return data;
 };

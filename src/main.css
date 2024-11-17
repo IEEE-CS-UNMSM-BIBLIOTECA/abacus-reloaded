@@ -195,6 +195,7 @@ a.no-underline {
 
 .c-dimmed { color: var(--mantine-color-dark-3); }
 .c-error { color: var(--mantine-color-error); }
+.c-white { color: var(--mantine-color-white); }
 
 .fz-xs { font-size: var(--mantine-font-size-xs); }
 .fz-sm { font-size: var(--mantine-font-size-sm); }
