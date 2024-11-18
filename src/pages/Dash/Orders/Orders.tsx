@@ -11,7 +11,7 @@ import getOrderStatus from '@/utils/getOrderStatus';
 import { finishOrder } from '@/services/endpoints/setters';
 
 const Content = ({ searchFilter }: { searchFilter: string }) => {
-  const ordersQuery = useQuery({ queryKey: ['documents'], queryFn: getOrders });
+  const ordersQuery = useQuery({ queryKey: ['orders'], queryFn: getOrders });
 
   const finishOrderMutation = useMutation({
     mutationFn: (orderId: number) => finishOrder(orderId),
@@ -35,7 +35,7 @@ const Content = ({ searchFilter }: { searchFilter: string }) => {
 
   if (!filteredData.length) { return <Empty />; }
 
-  const handleFinishOrder = () => (orderId: number) => {
+  const handleFinishOrder = (orderId: number) => {
     finishOrderMutation.mutate(orderId);
   };
 
@@ -48,9 +48,12 @@ const Content = ({ searchFilter }: { searchFilter: string }) => {
       <Table.Td>{order.max_return_date}</Table.Td>
       <Table.Td>{order.actual_return_date || 'No devuelto'}</Table.Td>
       <Table.Td>
-        <ActionIcon onClick={handleFinishOrder}>
+      {
+        !order.actual_return_date &&
+        <ActionIcon onClick={() => handleFinishOrder(order.id)}>
           <IconChecks className="icon sm c-white" size={20} />
         </ActionIcon>
+      }
       </Table.Td>
     </Table.Tr>
   ));
