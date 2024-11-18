@@ -86,8 +86,8 @@ export interface SubmitUserPayload extends UserNonKeyFields {
 }
 
 export interface UserBaseType {
-  id:                  number;
-  username:            string;
+  id:              number;
+  name:            string;
 }
 
 /* list */

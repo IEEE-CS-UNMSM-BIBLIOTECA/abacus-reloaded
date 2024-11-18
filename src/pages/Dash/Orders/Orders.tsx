@@ -13,21 +13,24 @@ import { finishOrder } from '@/services/endpoints/setters';
 const Content = ({ searchFilter }: { searchFilter: string }) => {
   const ordersQuery = useQuery({ queryKey: ['documents'], queryFn: getOrders });
 
-  if (ordersQuery.isLoading || ordersQuery.isFetching) { return <Loading />; }
-  if (ordersQuery.isError || !ordersQuery.data) { return <Error />; }
-  if (!ordersQuery.data.length) { return <Empty />; }
-
-  const queryClient = useQueryClient();
-
   const finishOrderMutation = useMutation({
     mutationFn: (orderId: number) => finishOrder(orderId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['orders'] });
+      console.log('Order finished');
     },
   });
 
+  const queryClient = useQueryClient();
+
+  if (ordersQuery.isLoading || ordersQuery.isFetching) { return <Loading />; }
+  if (ordersQuery.isError || !ordersQuery.data) { return <Error />; }
+  if (!ordersQuery.data.length) { return <Empty />; }
+
+  console.log(ordersQuery.data);
+
   const filteredData = ordersQuery.data.filter((order) => (
-    order.user.username.toLowerCase().includes(searchFilter.toLowerCase())
+    order.user?.name.toLowerCase().includes(searchFilter.toLowerCase())
   ));
 
   if (!filteredData.length) { return <Empty />; }
@@ -38,7 +41,7 @@ const Content = ({ searchFilter }: { searchFilter: string }) => {
 
   const rows = ordersQuery.data.map((order) => (
     <Table.Tr key={order.id}>
-      <Table.Td>{order.user?.username}</Table.Td>
+      <Table.Td>{order.user?.name}</Table.Td>
       <Table.Td>{order.document?.title}</Table.Td>
       <Table.Td>{getOrderStatus(order)}</Table.Td>
       <Table.Td>{order.order_date}</Table.Td>
@@ -46,7 +49,7 @@ const Content = ({ searchFilter }: { searchFilter: string }) => {
       <Table.Td>{order.actual_return_date || 'No devuelto'}</Table.Td>
       <Table.Td>
         <ActionIcon onClick={handleFinishOrder}>
-          <IconChecks className="icon sm" size={20} />
+          <IconChecks className="icon sm c-white" size={20} />
         </ActionIcon>
       </Table.Td>
     </Table.Tr>
