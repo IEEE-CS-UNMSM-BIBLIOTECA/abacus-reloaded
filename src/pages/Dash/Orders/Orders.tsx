@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ActionIcon, Button, Table, TextInput } from '@mantine/core';
+import { ActionIcon, Button, Checkbox, Table, TextInput } from '@mantine/core';
 import { IconChecks, IconSearch } from '@tabler/icons-react';
 import { Link } from 'wouter';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ import Empty from '@/components/Empty';
 import getOrderStatus from '@/utils/getOrderStatus';
 import { finishOrder } from '@/services/endpoints/setters';
 
-const Content = ({ searchFilter }: { searchFilter: string }) => {
+const Content = ({ searchFilter, active }: { searchFilter: string, active: boolean }) => {
   const ordersQuery = useQuery({ queryKey: ['orders'], queryFn: getOrders });
 
   const finishOrderMutation = useMutation({
@@ -29,9 +29,10 @@ const Content = ({ searchFilter }: { searchFilter: string }) => {
 
   console.log(ordersQuery.data);
 
-  const filteredData = ordersQuery.data.filter((order) => (
-    order.user?.name.toLowerCase().includes(searchFilter.toLowerCase())
-  ));
+  const filteredData = ordersQuery.data
+    .filter((order) => (
+      order.user?.name.toLowerCase().includes(searchFilter.toLowerCase())
+    ));
 
   if (!filteredData.length) { return <Empty />; }
 
@@ -39,24 +40,27 @@ const Content = ({ searchFilter }: { searchFilter: string }) => {
     finishOrderMutation.mutate(orderId);
   };
 
-  const rows = ordersQuery.data.map((order) => (
-    <Table.Tr key={order.id}>
-      <Table.Td>{order.user?.name}</Table.Td>
-      <Table.Td>{order.document?.title}</Table.Td>
-      <Table.Td>{getOrderStatus(order)}</Table.Td>
-      <Table.Td>{order.order_date}</Table.Td>
-      <Table.Td>{order.max_return_date}</Table.Td>
-      <Table.Td>{order.actual_return_date || 'No devuelto'}</Table.Td>
-      <Table.Td>
-      {
-        !order.actual_return_date &&
-        <ActionIcon onClick={() => handleFinishOrder(order.id)}>
-          <IconChecks className="icon sm c-white" size={20} />
-        </ActionIcon>
-      }
-      </Table.Td>
-    </Table.Tr>
-  ));
+  const rows = ordersQuery.data.map((order) => {
+    if (active && order.actual_return_date) { return null; }
+    return (
+      <Table.Tr key={order.id}>
+        <Table.Td>{order.user?.name}</Table.Td>
+        <Table.Td>{order.document?.title}</Table.Td>
+        <Table.Td>{getOrderStatus(order)}</Table.Td>
+        <Table.Td>{order.order_date}</Table.Td>
+        <Table.Td>{order.max_return_date}</Table.Td>
+        <Table.Td>{order.actual_return_date || 'No devuelto'}</Table.Td>
+        <Table.Td>
+        {
+          !order.actual_return_date &&
+          <ActionIcon onClick={() => handleFinishOrder(order.id)}>
+            <IconChecks className="icon sm c-white" size={20} />
+          </ActionIcon>
+        }
+        </Table.Td>
+      </Table.Tr>
+    );
+  });
 
   return (
     <Table flex={1}>
@@ -80,6 +84,7 @@ const Content = ({ searchFilter }: { searchFilter: string }) => {
 
 const Orders = () => {
   const [searchFilter, setSearchFilter] = useState('');
+  const [active, setActive] = useState(true);
 
   return (
     <div className="stack py-md gap-md">
@@ -94,15 +99,13 @@ const Orders = () => {
           value={searchFilter}
           onChange={(event) => setSearchFilter(event.currentTarget.value)}
         />
-        <Button
-          variant="primary"
-          component={Link}
-          href="/new"
-        >
-          AÑADIR
-        </Button>
+        <Checkbox
+          checked={active}
+          onChange={() => setActive(!active)}
+          label="Mostrar solo órdenes activas"
+        />
       </div>
-      <Content searchFilter={searchFilter} />
+      <Content searchFilter={searchFilter} active={active} />
     </div>
   );
 };
