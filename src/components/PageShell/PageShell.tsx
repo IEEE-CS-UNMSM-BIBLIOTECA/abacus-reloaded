@@ -14,7 +14,7 @@ const staticDrawerLinks = [
 const PageShell = ({ children, fullHeight }: { children?: React.ReactNode }) => {
   const [location, setLocation] = useLocation();
   const [opened, setOpened] = useState(false);
-  const [token] = useLocalStorage({ key: 'token' });
+  const [token] = useLocalStorage({ key: 'abacus-token' });
 
   let drawerLinks = staticDrawerLinks;
 
@@ -32,7 +32,7 @@ const PageShell = ({ children, fullHeight }: { children?: React.ReactNode }) => 
   });
 
   const logout = () => {
-    localStorage.setItem('token', '');
+    localStorage.setItem('abacus-token', '');
     setLocation('/');
   };
 

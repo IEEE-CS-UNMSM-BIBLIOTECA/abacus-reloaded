@@ -8,7 +8,7 @@ import { SigninPayload } from '@/types';
 import { signIn } from '@/services/endpoints/auth';
 
 const Signin = () => {
-  const [token] = useLocalStorage({ key: 'token' });
+  const [token] = useLocalStorage({ key: 'abacus-token' });
 
   const form = useForm({
     initialValues: {
@@ -31,7 +31,7 @@ const Signin = () => {
 
   const handleSignin = () => form.onSubmit(async (values: SigninPayload) => {
     const { data } = await signinMutation.mutateAsync(values);
-    localStorage.setItem('token', data.token);
+    localStorage.setItem('abacus-token', data.token);
     setLocation('/dash/orders');
   });
 

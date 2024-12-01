@@ -10,7 +10,7 @@ const App = () => {
   useAppStart();
   useLocationChange();
 
-  const [token] = useLocalStorage({ key: 'token' });
+  const [token] = useLocalStorage({ key: 'abacus-token' });
 
   return (
     <div className="app-container">

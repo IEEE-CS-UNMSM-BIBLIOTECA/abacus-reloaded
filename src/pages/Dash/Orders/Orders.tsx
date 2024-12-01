@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ActionIcon, Button, Checkbox, Table, TextInput } from '@mantine/core';
+import { ActionIcon, Checkbox, Table, TextInput } from '@mantine/core';
 import { IconChecks, IconSearch } from '@tabler/icons-react';
-import { Link } from 'wouter';
 import { useState } from 'react';
 import { getOrders } from '@/services/endpoints/getters';
 import Loading from '@/components/Loading';
@@ -17,7 +16,6 @@ const Content = ({ searchFilter, active }: { searchFilter: string, active: boole
     mutationFn: (orderId: number) => finishOrder(orderId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['orders'] });
-      console.log('Order finished');
     },
   });
 
@@ -26,8 +24,6 @@ const Content = ({ searchFilter, active }: { searchFilter: string, active: boole
   if (ordersQuery.isLoading || ordersQuery.isFetching) { return <Loading />; }
   if (ordersQuery.isError || !ordersQuery.data) { return <Error />; }
   if (!ordersQuery.data.length) { return <Empty />; }
-
-  console.log(ordersQuery.data);
 
   const filteredData = ordersQuery.data
     .filter((order) => (
