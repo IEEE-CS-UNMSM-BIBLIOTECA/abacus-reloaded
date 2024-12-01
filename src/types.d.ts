@@ -16,16 +16,16 @@ interface DocumentNonKeyFields {
   mean_rating:           number | null;
 }
 
-export interface DocumentType extends DocumentNonKeyFields {
+export interface Document extends DocumentNonKeyFields {
   id:        number;
-  authors:   AuthorBaseType[];
-  language:  LanguageType;
-  format:    DocumentFormatType;
-  publisher: PublisherType;
-  tags:      TagBaseType[];
+  authors:   BasicAuthor[];
+  language:  Language;
+  format:    DocumentFormat;
+  publisher: Publisher;
+  tags:      BasicTag[];
 }
 
-export interface SubmitDocumentFormData extends Omit<DocumentNonKeyFields, "mean_rating"> {
+export interface CreateDocumentFormData extends Omit<DocumentNonKeyFields, "mean_rating"> {
   authors_id:   string[];
   language_id:  string;
   format_id:    string;
@@ -33,8 +33,7 @@ export interface SubmitDocumentFormData extends Omit<DocumentNonKeyFields, "mean
   tags_id:      string[];
 }
 
-export interface SubmitDocumentPayload extends Omit<DocumentNonKeyFields, "mean_rating" | "isbn"> {
-  ISBN:         string;    // todo: change to isbn
+export interface CreateDocumentPayload extends Omit<DocumentNonKeyFields, "mean_rating"> {
   authors_id:   number[];
   language_id:  number;
   format_id:    number;
@@ -42,7 +41,7 @@ export interface SubmitDocumentPayload extends Omit<DocumentNonKeyFields, "mean_
   tags_id:      number[];
 }
 
-export interface DocumentTypeBase {
+export interface BasicDocument {
   id:    number;
   title: string;
 }
@@ -57,10 +56,10 @@ interface ReviewNonKeyFields {
   spoiler:     boolean;
 }
 
-export interface ReviewType {
+export interface Review extends ReviewNonKeyFields {
   id:          number;
-  user:        UserBaseType;
-  document:    DocumentTypeBase;
+  user:        BasicUser;
+  document:    BasicDocument;
 }
 
 /* user */
@@ -72,20 +71,19 @@ interface UserNonKeyFields {
   address:               string;
   birth_date:            string;
   mobile_phone:          string;
-  // profile_picture_url:   string;
 }
 
-export interface UserType extends UserNonKeyFields {
-  role:   RoleType;
-  gender: GenderType;
+export interface User extends UserNonKeyFields {
+  role:   Role;
+  gender: Gender;
 }
 
-export interface SubmitUserPayload extends UserNonKeyFields {
+export interface CreateUserPayload extends UserNonKeyFields {
   role_id:   number;
   gender_id: number;
 }
 
-export interface UserBaseType {
+export interface BasicUser {
   id:              number;
   name:            string;
 }
@@ -97,10 +95,10 @@ export interface ListNonKeyFields {
   total_likes: number;
   total_books: number;
   private:     boolean;
-  user:        UserBaseType;
+  user:        BasicUser;
 }
 
-export interface ListType extends ListNonKeyFields {
+export interface List extends ListNonKeyFields {
   id:        number;
 }
 
@@ -113,18 +111,18 @@ interface AuthorNonKeyFields {
   bio:         string;
 }
 
-export interface AuthorType extends AuthorBaseType {
+export interface Author extends BasicAuthor {
   id:      number;
-  gender:  GenderType;
-  country: CountryType;
+  gender:  Gender;
+  country: Country;
 }
 
-export interface SubmitAuthorPayload extends AuthorNonKeyFields {
+export interface CreateAuthorPayload extends AuthorNonKeyFields {
   gender_id:  number;
   country_id: number;
 }
 
-export interface AuthorBaseType extends BaseEntity {}
+export interface BasicAuthor extends BaseEntity {}
 
 /* order */
 
@@ -134,13 +132,13 @@ interface OrderNonKeyFields {
   actual_return_date: string | null;
 }
 
-export interface OrderType extends OrderNonKeyFields {
+export interface Order extends OrderNonKeyFields {
   id:       number;
-  document: DocumentTypeBase;
-  user:     UserBaseType;
+  document: BasicDocument;
+  user:     BasicUser;
 }
 
-export interface SubmitOrderPayload extends OrderNonKeyFields {
+export interface CreateOrderPayload extends OrderNonKeyFields {
   document_id: number;
   user_id:     number;
 }
@@ -152,13 +150,13 @@ interface TagNonKeyFields {
   mean_rating: number;
 }
 
-export interface TagType extends TagNonKeyFields {
+export interface Tag extends TagNonKeyFields {
   id: number;
 }
 
-export interface SubmitTagPayload extends Omit<TagNonKeyFields, "mean_rating"> {}
+export type CreateTagPayload = Omit<TagNonKeyFields, "mean_rating">
 
-export interface TagBaseType extends BaseEntity {}
+export interface BasicTag extends BaseEntity {}
 
 /* auth */
 
@@ -185,23 +183,23 @@ export interface PublisherNonKeyFields {
   name: string;
 }
 
-export interface PublisherType extends PublisherNonKeyFields {
+export interface Publisher extends PublisherNonKeyFields {
   id: number;
 }
 
-export interface SubmitPublisherPayload extends PublisherNonKeyFields {}
+export type CreatePublisherPayload = PublisherNonKeyFields
 
 /* other */
 
-export interface RoleType extends BaseEntity {}
+export interface Role extends BaseEntity {}
 
-export interface DocumentFormatType extends BaseEntity {}
+export interface DocumentFormat extends BaseEntity {}
 
-export interface GenderType extends BaseEntity {}
+export interface Gender extends BaseEntity {}
 
-export interface LanguageType extends BaseEntity {}
+export interface Language extends BaseEntity {}
 
-export interface CountryType extends BaseEntity {}
+export interface Country extends BaseEntity {}
 
 /* internal */
 
@@ -210,12 +208,12 @@ interface BaseEntity {
   name: string;
 }
 
-export interface SearchableSelectOptionType {
+export interface SearchableSelectOption {
   value: string;
   label: string;
 }
 
-export interface MenuOptionType {
+export interface MenuOption {
   label:   string;
   onClick: () => void;
 }

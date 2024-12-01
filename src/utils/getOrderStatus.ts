@@ -1,6 +1,6 @@
-import { OrderType } from '@/types';
+import { Order } from '@/types';
 
-const getOrderStatus = (order: OrderType) => {
+const getOrderStatus = (order: Order) => {
   const maxReturnDate = new Date(order.max_return_date);
   const actualReturnDate = order.actual_return_date ? new Date(order.actual_return_date) : null;
 

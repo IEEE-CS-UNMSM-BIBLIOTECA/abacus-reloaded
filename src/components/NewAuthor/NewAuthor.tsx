@@ -2,7 +2,7 @@ import { Button, Grid, Modal, Textarea, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMutation, useQueries, useQueryClient } from '@tanstack/react-query';
 import { getCountries, getGenders } from '@/services/endpoints/getters';
-import { CountryType, GenderType, SubmitAuthorPayload } from '@/types';
+import { Country, Gender, CreateAuthorPayload } from '@/types';
 import SearchableSelect from '../SearchableSelect';
 import { addAuthor } from '@/services/endpoints/setters';
 
@@ -23,31 +23,31 @@ const NewAuthor = ({ opened, onClose }: {
   });
 
   const countriesData = optionsQueries.data[0]
-    ? optionsQueries.data[0].map((country: CountryType) => ({
+    ? optionsQueries.data[0].map((country: Country) => ({
       value: country.id,
       label: country.name,
     }))
     : [];
 
   const gendersData = optionsQueries.data[1]
-    ? optionsQueries.data[1].map((gender: GenderType) => ({
+    ? optionsQueries.data[1].map((gender: Gender) => ({
       value: gender.id,
       label: gender.name,
     }))
     : [];
 
-  const form = useForm<SubmitAuthorPayload>();
+  const form = useForm<CreateAuthorPayload>();
 
   const queryClient = useQueryClient();
 
   const addAuthorMutation = useMutation({
-    mutationFn: (values: SubmitAuthorPayload) => addAuthor(values),
+    mutationFn: (values: CreateAuthorPayload) => addAuthor(values),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['authors'] });
     },
   });
 
-  const handleSubmit = () => form.onSubmit(async (values: SubmitAuthorPayload) => {
+  const handleSubmit = () => form.onSubmit(async (values: CreateAuthorPayload) => {
     await addAuthorMutation.mutateAsync(values);
     onClose();
   });

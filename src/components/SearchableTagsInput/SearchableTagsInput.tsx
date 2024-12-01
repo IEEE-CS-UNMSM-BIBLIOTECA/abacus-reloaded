@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Combobox, Pill, PillsInput, useCombobox } from '@mantine/core';
-import { SearchableSelectOptionType } from '@/types';
+import { SearchableSelectOption } from '@/types';
 
 interface SearchableSelectProps extends React.ComponentPropsWithoutRef<typeof PillsInput> {
-  data: SearchableSelectOptionType[];
+  data: SearchableSelectOption[];
   value: string[];
   onOptionSubmit: (value: string[]) => void;
   placeholder?: string;

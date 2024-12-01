@@ -1,10 +1,10 @@
-export interface LinkType {
+export interface Link {
   href: string;
   label: string;
 }
 
 interface LinksProps extends React.HTMLProps<HTMLSpanElement> {
-  links: LinkType[];
+  links: Link[];
 }
 
 const Links = ({ links, ...rest }: LinksProps) => {

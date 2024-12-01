@@ -1,25 +1,25 @@
 import { Button, Modal, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { SubmitPublisherPayload } from '@/types';
+import { CreatePublisherPayload } from '@/types';
 import { addPublisher } from '@/services/endpoints/setters';
 
 const NewPublisher = ({ opened, onClose }: {
   opened: boolean;
   onClose: () => void;
 }) => {
-  const form = useForm<SubmitPublisherPayload>();
+  const form = useForm<CreatePublisherPayload>();
 
   const queryClient = useQueryClient();
 
   const addAuthorMutation = useMutation({
-    mutationFn: (values: SubmitPublisherPayload) => addPublisher(values),
+    mutationFn: (values: CreatePublisherPayload) => addPublisher(values),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['publishers'] });
     },
   });
 
-  const handleSubmit = () => form.onSubmit(async (values: SubmitPublisherPayload) => {
+  const handleSubmit = () => form.onSubmit(async (values: CreatePublisherPayload) => {
     await addAuthorMutation.mutateAsync(values);
     onClose();
   });

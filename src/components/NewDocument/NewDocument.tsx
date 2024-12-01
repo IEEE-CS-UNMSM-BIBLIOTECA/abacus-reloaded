@@ -12,7 +12,7 @@ import {
   getPublishers,
   getTags,
 } from '@/services/endpoints/getters';
-import { AuthorBaseType, DocumentFormatType, LanguageType, PublisherType, SubmitDocumentFormData, SubmitDocumentPayload, TagType } from '@/types';
+import { BasicAuthor, DocumentFormat, Language, Publisher, CreateDocumentFormData, CreateDocumentPayload, Tag } from '@/types';
 import { addDocument } from '@/services/endpoints/setters';
 import SearchableSelect from '@/components/SearchableSelect';
 import SearchableTagsInput from '@/components/SearchableTagsInput';
@@ -42,41 +42,41 @@ const NewDocument = () => {
   });
 
   const authorsData = optionsQueries.data[0]
-    ? optionsQueries.data[0].map((author: AuthorBaseType) => ({
+    ? optionsQueries.data[0].map((author: BasicAuthor) => ({
       value: author.id.toString(),
       label: author.name,
     }))
     : [];
 
   const formatsData = optionsQueries.data[1]
-    ? optionsQueries.data[1].map((format: DocumentFormatType) => ({
+    ? optionsQueries.data[1].map((format: DocumentFormat) => ({
       value: format.id.toString(),
       label: format.name,
     }))
     : [];
 
   const languagesData = optionsQueries.data[2]
-    ? optionsQueries.data[2].map((language: LanguageType) => ({
+    ? optionsQueries.data[2].map((language: Language) => ({
       value: language.id.toString(),
       label: language.name,
     }))
     : [];
 
   const publishersData = optionsQueries.data[3]
-    ? optionsQueries.data[3].map((publisher: PublisherType) => ({
+    ? optionsQueries.data[3].map((publisher: Publisher) => ({
       value: publisher.id.toString(),
       label: publisher.name,
     }))
     : [];
 
   const tagsData = optionsQueries.data[4]
-    ? optionsQueries.data[4].map((tag: TagType) => ({
+    ? optionsQueries.data[4].map((tag: Tag) => ({
       value: tag.id.toString(),
       label: tag.name,
     }))
     : [];
 
-  const form = useForm<SubmitDocumentFormData>({
+  const form = useForm<CreateDocumentFormData>({
     mode: 'uncontrolled',
     validate: {
       publication_year: isInRange(
@@ -98,14 +98,14 @@ const NewDocument = () => {
   const queryClient = useQueryClient();
 
   const addDocumentMutation = useMutation({
-    mutationFn: (values: SubmitDocumentPayload) => addDocument(values),
+    mutationFn: (values: CreateDocumentPayload) => addDocument(values),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['documents'] });
     },
   });
 
-  const handleSubmit = () => form.onSubmit(async (values: SubmitDocumentFormData) => {
-    const data: SubmitDocumentPayload = {
+  const handleSubmit = () => form.onSubmit(async (values: CreateDocumentFormData) => {
+    const data: CreateDocumentPayload = {
       ...values,
       ISBN: values.isbn,
       authors_id: values.authors_id.map((id) => parseInt(id, 10)),

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Combobox, InputBase, useCombobox } from '@mantine/core';
-import { SearchableSelectOptionType } from '@/types';
+import { SearchableSelectOption } from '@/types';
 
 interface SearchableSelectProps {
-  data: SearchableSelectOptionType[];
+  data: SearchableSelectOption[];
   value?: string | null;
   onChange?: (val: string) => void;
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;

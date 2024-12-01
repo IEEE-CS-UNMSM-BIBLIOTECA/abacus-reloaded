@@ -11,7 +11,7 @@ const staticDrawerLinks = [
   { label: 'RESEÑAS', href: '/reviews' },
 ];
 
-const PageShell = ({ children, fullHeight }: { children?: React.ReactNode }) => {
+const PageShell = ({ children }: { children?: React.ReactNode }) => {
   const [location, setLocation] = useLocation();
   const [opened, setOpened] = useState(false);
   const [token] = useLocalStorage({ key: 'abacus-token' });
