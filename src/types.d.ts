@@ -85,7 +85,7 @@ export interface CreateUserPayload extends UserNonKeyFields {
 
 export interface BasicUser {
   id:              number;
-  name:            string;
+  username:        string;
 }
 
 /* list */

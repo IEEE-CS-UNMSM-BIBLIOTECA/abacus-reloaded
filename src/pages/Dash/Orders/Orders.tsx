@@ -27,7 +27,7 @@ const Content = ({ searchFilter, active }: { searchFilter: string, active: boole
 
   const filteredData = ordersQuery.data
     .filter((order) => (
-      order.user?.name.toLowerCase().includes(searchFilter.toLowerCase())
+      order.user?.username.toLowerCase().includes(searchFilter.toLowerCase())
     ));
 
   if (!filteredData.length) { return <Empty />; }
@@ -40,7 +40,7 @@ const Content = ({ searchFilter, active }: { searchFilter: string, active: boole
     if (active && order.actual_return_date) { return null; }
     return (
       <Table.Tr key={order.id}>
-        <Table.Td>{order.user?.name}</Table.Td>
+        <Table.Td>{order.user?.username}</Table.Td>
         <Table.Td>{order.document?.title}</Table.Td>
         <Table.Td>{getOrderStatus(order)}</Table.Td>
         <Table.Td>{order.order_date}</Table.Td>
